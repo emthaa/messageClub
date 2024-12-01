@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sign Up</title>
+</head>
+<body>
+  <h1>Sign Up</h1>
+  <form action="/sign-up" method="post">
+    <input type="text" name="firstName" placeholder="First Name" value="<%= data ? data.firstName : '' %>">
+    <input type="text" name="lastName" placeholder="Last Name" value="<%= data ? data.lastName : '' %>">
+    <input type="text" name="username" placeholder="Username" value="<%= data ? data.username : '' %>">
+    <input type="password" name="password" placeholder="Password">
+    <input type="password" name="confirmPassword" placeholder="Confirm Password">
+    <button type="submit">Sign Up</button>
+    <% if (errors) { %>
+      <ul>
+        <% errors.forEach(error => { %>
+          <li><%= error.msg %></li>
+        <% }); %>
+      </ul>
+    <% } %>
+  </form>
+  
+</body>
+</html>
