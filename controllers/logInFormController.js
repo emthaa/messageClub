@@ -15,9 +15,13 @@ function logInFormRouterGet(req, res, next) {
 
 function logInFormRouterPost(req, res, next) {
   passport.authenticate("local", (err, user, info) => {
-    console.log(user);
     if (err) return next(err);
-    if (!user) return res.redirect("/log-in");
+    if (!user) {
+      return res.render("log-in-form", {
+        errors: [{ msg: info.message }], 
+        data: { username: req.body.username } 
+      });
+    }
 
     req.login(user, (err) => {
       if (err) return next(err);
@@ -25,6 +29,7 @@ function logInFormRouterPost(req, res, next) {
     });
   })(req, res, next);
 }
+
 module.exports = {
   logInFormRouterGet,
   logInFormRouterPost,

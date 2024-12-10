@@ -2,7 +2,7 @@ const { Router } = require("express");
 const signUpFormRouter = Router();
 const signUpFormController = require("../controllers/signUpFormController");
 const { check, validationResult } = require("express-validator");
-
+const pool = require("../db/pool");
 signUpFormRouter.get("/sign-up", signUpFormController.signUpFormRouterGet);
 
 signUpFormRouter.post(
@@ -23,7 +23,16 @@ signUpFormRouter.post(
       .matches(/^\w+$/)
       .withMessage(
         "Username must contain only letters, numbers, or underscores"
-      ),
+      )
+      .custom(async (value) => {
+        const { rows } = await pool.query(
+          "SELECT * FROM users WHERE username = $1",
+          [value]
+        );
+        if (rows.length) {
+          throw new Error("Username is already taken");
+        }
+      }),
     check("password")
       .trim()
       .isLength({ min: 8 })

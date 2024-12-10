@@ -1,6 +1,6 @@
 const bcrypt = require("bcryptjs");
-const pool = require("../db/pool");
 const { check, validationResult } = require("express-validator");
+const queries = require("../db/queries");
 
 function signUpFormRouterGet(req, res, next) {
   try {
@@ -31,10 +31,7 @@ async function signUpFormRouterPost(req, res, next) {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     //insert info from form to db, default membership:standard
-    const result = await pool.query(
-      "INSERT INTO users (full_name, username, password, membership_status) VALUES ($1, $2, $3, $4) RETURNING id",
-      [fullName, username, hashedPassword, "standard"]
-    );
+    const result = queries.createUser(fullName, username, hashedPassword);  
     // check if user went into db
     if (result.rowCount === 0) {
       throw new Error("Failed to insert user");
