@@ -1,10 +1,20 @@
-function indexRouterGet(req, res) {
+const queries = require("../db/queries");
+
+async function indexRouterGet(req, res) {
   try {
+    const messages = await queries.getMessages();
     if (req.isAuthenticated()) {
-      console.log(req.user)
-      res.render("index", { username: req.user.username });
+      res.render("index", {
+        username: req.user.username,
+        messages: messages,
+        membership: req.user.membership_status,
+      });
     } else {
-      res.render("index", { username : null});
+      res.render("index", {
+        username: null,
+        messages: messages,
+        membership: null,
+      });
     }
   } catch (error) {
     next(error);

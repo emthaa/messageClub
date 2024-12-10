@@ -12,8 +12,9 @@ const indexRouter = require("./routers/indexRouter");
 const signUpFormRouter = require("./routers/signUpFormRouter");
 const logInFormRouter = require("./routers/logInFormRouter");
 const enterSecretRouter = require("./routers/enterSecretRouter");
+const createMessageRouter = require("./routers/createMessageRouter");
 
-app.use(session({ secret: "cats", resave: false, saveUninitialized: false }));
+app.use(session({ secret: process.env.SESSION_SECRET, resave: false, saveUninitialized: false }));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.urlencoded({ extended: false }));
@@ -25,7 +26,7 @@ app.use("/", indexRouter);
 app.use("/", signUpFormRouter);
 app.use("/", logInFormRouter);
 app.use("/", enterSecretRouter);
-
+app.use("/", createMessageRouter);
 passport.use(
   new LocalStrategy(async (username, password, done) => {
     try {
@@ -55,7 +56,9 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser(async (id, done) => {
   try {
-    const { rows } = await pool.query("SELECT * FROM users WHERE id = $1", [id]);
+    const { rows } = await pool.query("SELECT * FROM users WHERE id = $1", [
+      id,
+    ]);
     const user = rows[0];
     done(null, user);
   } catch (err) {
