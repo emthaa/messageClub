@@ -13,6 +13,7 @@ const signUpFormRouter = require("./routers/signUpFormRouter");
 const logInFormRouter = require("./routers/logInFormRouter");
 const enterSecretRouter = require("./routers/enterSecretRouter");
 const createMessageRouter = require("./routers/createMessageRouter");
+const adminAccessRouter = require("./routers/adminAccessRouter");
 
 app.use(session({ secret: process.env.SESSION_SECRET, resave: false, saveUninitialized: false }));
 app.use(passport.initialize());
@@ -27,6 +28,7 @@ app.use("/", signUpFormRouter);
 app.use("/", logInFormRouter);
 app.use("/", enterSecretRouter);
 app.use("/", createMessageRouter);
+app.use("/", adminAccessRouter);
 passport.use(
   new LocalStrategy(async (username, password, done) => {
     try {

@@ -5,6 +5,7 @@ async function createUser(fullName, username, hashedPassword) {
     "INSERT INTO users (full_name, username, password, membership_status) VALUES ($1, $2, $3, $4) RETURNING id",
     [fullName, username, hashedPassword, "standard"]
   );
+  return rows[0].id;
 }
 
 async function createMessage(title, text, user_id) {
@@ -12,6 +13,7 @@ async function createMessage(title, text, user_id) {
     "INSERT INTO messages (title, text, user_id) VALUES ($1, $2, $3)",
     [title, text, user_id]
   );
+  return rows[0].id;
 }
 
 async function upgradeMembership(user_id) {
@@ -19,6 +21,7 @@ async function upgradeMembership(user_id) {
     `UPDATE users SET membership_status = $1 WHERE id = $2`,
     ["premium", user_id]
   );
+  return rows;
 }
 
 async function getUsername(user_id) {
@@ -26,18 +29,37 @@ async function getUsername(user_id) {
     `SELECT username FROM users WHERE id = $1`,
     [user_id]
   );
-  return rows[0].username;
+  return rows;
 }
 
 async function getMessages() {
   const { rows } = await pool.query(`SELECT * FROM messages`);
-  console.log(rows)
   return rows;
 }
+
+async function grantAdminAccess(user_id) {
+  const { rows } = await pool.query(
+    `UPDATE users SET admin = true WHERE id = $1;`,
+    [user_id]
+  );
+  return rows;
+}
+
+async function deleteMessage(message_id) {
+  const { rows } = await pool.query(
+    `DELETE FROM messages WHERE id = $1 RETURNING id`,
+    [message_id]
+  );
+  return rows;
+}
+
 module.exports = {
   createUser,
   createMessage,
   upgradeMembership,
   getUsername,
   getMessages,
+  grantAdminAccess,
+  deleteMessage
+
 };

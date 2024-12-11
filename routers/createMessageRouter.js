@@ -24,4 +24,9 @@ createMessageRouter.post(
   createMessageController.createMessageRouterPost
 );
 
+createMessageRouter.post(
+  "/delete-message/:id",
+  createMessageController.deleteMessageRouterPost
+);
+
 module.exports = createMessageRouter;

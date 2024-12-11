@@ -43,8 +43,23 @@ async function createMessageRouterPost(req, res, next) {
     next(error);
   }
 }
+async function deleteMessageRouterPost(req, res, next) {
+  try {
+    if (req.isAuthenticated() && req.user.admin) {
+      const messageId = req.params.id;
+      await queries.deleteMessage(messageId);
+      res.redirect("/");
+    } else {
+      res.status(403).send("Forbidden");
+    }
+  } catch (error) {
+    console.error("Error deleting message:", error);
+    next(error);
+  }
+}
 
 module.exports = {
   createMessageRouterGet,
   createMessageRouterPost,
+  deleteMessageRouterPost,
 };
