@@ -13,7 +13,7 @@ async function createMessage(title, text, user_id) {
     "INSERT INTO messages (title, text, user_id) VALUES ($1, $2, $3)",
     [title, text, user_id]
   );
-  return rows[0].id;
+  return rows[0];
 }
 
 async function upgradeMembership(user_id) {
@@ -33,10 +33,13 @@ async function getUsername(user_id) {
 }
 
 async function getMessages() {
-  const { rows } = await pool.query(`SELECT * FROM messages`);
+  const { rows } = await pool.query(`
+    SELECT messages.id, messages.title, messages.text, messages.timestamp, users.username 
+    FROM messages 
+    JOIN users ON messages.user_id = users.id
+  `);
   return rows;
 }
-
 async function grantAdminAccess(user_id) {
   const { rows } = await pool.query(
     `UPDATE users SET admin = true WHERE id = $1;`,
@@ -60,6 +63,5 @@ module.exports = {
   getUsername,
   getMessages,
   grantAdminAccess,
-  deleteMessage
-
+  deleteMessage,
 };

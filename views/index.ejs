@@ -20,8 +20,8 @@
             <h2><%= message.title %></h2>
             <p><%= message.text %></p>
             <% if (membership == "premium") { %>
-              <p><%= message.timestamp %></p>
-              <p><%= message.user_id %></p>
+              <p><%= message.formattedTimestamp %></p>
+              <p>Posted by: <%= message.username %></p>
             <% } %>
             <% if (admin == true) { %>
               <form action="/delete-message/<%= message.id %>" method="POST">
