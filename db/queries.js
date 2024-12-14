@@ -37,6 +37,7 @@ async function getMessages() {
     SELECT messages.id, messages.title, messages.text, messages.timestamp, users.username 
     FROM messages 
     JOIN users ON messages.user_id = users.id
+    ORDER BY messages.timestamp DESC
   `);
   return rows;
 }
