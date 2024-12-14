@@ -1,18 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Admin Access</title>
-</head>
-<body>
-  <h1>Enter the Admin Code to get Admin Access</h1>
-  <form action="/admin-access" method="POST">
-    <label for="adminCode">Admin Code</label>
-    <input id="adminCode" name="adminCode" type="password" />
-    <button>Enter</button>
-      <% if (message) { %>
-    <p><%= message %></p>
-  <% } %>
-  </form>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Admin Access</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <a href="/">Home</a>
+    </header>
+    <main>
+      <h1>Enter the Admin Code to get Admin Access</h1>
+      <form action="/admin-access" method="POST">
+        <label for="adminCode">Admin Code</label>
+        <input id="adminCode" name="adminCode" type="password" />
+        <button>Enter</button>
+        <% if (message) { %>
+        <div class="message-wrapper">
+          <p class="error"><%= message %></p>
+        </div>
+        <% } %>
+      </form>
+    </main>
+  </body>
 </html>

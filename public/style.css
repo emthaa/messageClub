@@ -1,0 +1,118 @@
+:root{
+    --black: #001A23;
+    --white: #E8F1F2;
+    --light-green: #B3EFB2;
+    --dark-green: #31493C;
+    --green: #7A9E7E;
+}
+
+html,body{
+    margin: 0;
+    padding: 10px;
+    font-family: 'Roboto', sans-serif;
+}
+
+body{
+    background-color: var(--black);
+    color: var(--white);
+}
+
+
+a,button{
+    text-decoration: none;
+    color: var(--white);
+    background-color: var(--dark-green);
+    padding: 5px 10px;
+    border-radius: 15px;
+}
+
+a:hover,button:hover{
+    background-color: var(--green);
+    cursor: pointer;
+}
+
+input[type="text"],input[type="password"],input[type="email"]{
+    padding: 5px 10px;
+    border-radius: 15px;
+    border: none;
+    margin: 5px;
+}
+
+
+li {
+    border: 2px solid var(--light-green);
+    border-radius: 10px;
+    min-width: 375px;
+    max-width: 250px;
+    list-style-type: none;
+    padding: 5px;
+    text-align: center;
+    word-wrap: break-word;
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+
+}
+
+ul{
+    display: flex;
+    gap: 8px;
+    flex-direction: column;
+    align-items: center;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+main{
+    text-align: center;
+}
+
+.error{
+    margin-top: 21.44px;
+    border: 2px solid var(--light-green);
+    border-radius: 10px;
+    min-width: 375px;
+    max-width: 250px;
+    list-style-type: none;
+    padding: 5px;
+    text-align: center;
+    word-wrap: break-word;
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+}
+
+.message-wrapper{
+    display: flex;
+    gap: 8px;
+    flex-direction: column;
+    align-items: center;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.is-log-in{
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+
+.is-log-in-right{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+}
+
+.not-log-in{
+    display: flex;
+    justify-content: center;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+

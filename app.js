@@ -14,6 +14,7 @@ const logInFormRouter = require("./routers/logInFormRouter");
 const enterSecretRouter = require("./routers/enterSecretRouter");
 const createMessageRouter = require("./routers/createMessageRouter");
 const adminAccessRouter = require("./routers/adminAccessRouter");
+const logOutRouter = require("./routers/logOutRouter");
 
 app.use(session({ secret: process.env.SESSION_SECRET, resave: false, saveUninitialized: false }));
 app.use(passport.initialize());
@@ -22,6 +23,7 @@ app.use(express.urlencoded({ extended: false }));
 
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
+app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
 app.use("/", signUpFormRouter);
@@ -29,6 +31,8 @@ app.use("/", logInFormRouter);
 app.use("/", enterSecretRouter);
 app.use("/", createMessageRouter);
 app.use("/", adminAccessRouter);
+app.use("/", logOutRouter);
+
 passport.use(
   new LocalStrategy(async (username, password, done) => {
     try {

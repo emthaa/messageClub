@@ -3,36 +3,48 @@
   <head>
     <meta charset="UTF-8" />
     <title>Home</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <link rel="shortcut icon" href="../public/wedge.PNG" type="image/x-icon" />
   </head>
   <body>
-    <a href="/sign-up">Sign Up</a>
-    <a href="/log-in">Log In</a>
-    <a href="/enter-secret">Upgrade</a>
-    <a href="/create-message">Create Message</a>
-    <a href="/admin-access">Admin Access</a>
-    <% if (username) { %>
+    <header>
+      <% if (username) { %>
+        <div class="is-log-in">
+    <div class="is-log-in-left">
+      <a href="/create-message">Create Message</a>
+      <a href="/enter-secret">Upgrade</a>
+      <a href="/admin-access">Admin Access</a>
+    </div>
+    <div class="is-log-in-right">
       <p>Welcome <%= username %></p>
-    <% } %>
+      <a href="/logout">Log Out</a>
+    </div>
+      <% } else { %>
+      <div class="not-log-in">
+      <a href="/sign-up">Sign Up</a>
+      <a href="/log-in">Log In</a>
+    </div>
+      <% } %>
+    </header>
     <% if (messages && messages.length > 0) { %>
-      <ul>
-        <% messages.forEach(message => { %>
-          <li>
-            <h2><%= message.title %></h2>
-            <p><%= message.text %></p>
-            <% if (membership == "premium") { %>
-              <p><%= message.formattedTimestamp %></p>
-              <p>Posted by: <%= message.username %></p>
-            <% } %>
-            <% if (admin == true) { %>
-              <form action="/delete-message/<%= message.id %>" method="POST">
-                <button type="submit">Delete</button>
-              </form>
-            <% } %>
-          </li>
-        <% }); %>
-      </ul>
+    <ul>
+      <% messages.forEach(message => { %>
+      <li>
+        <h2><%= message.title %></h2>
+        <p><%= message.text %></p>
+        <% if (membership == "premium") { %>
+        <p><%= message.formattedTimestamp %></p>
+        <p>Posted by: <%= message.username %></p>
+        <% } %> <% if (admin == true) { %>
+        <form action="/delete-message/<%= message.id %>" method="POST">
+          <button type="submit">Delete</button>
+        </form>
+        <% } %>
+      </li>
+      <% }); %>
+    </ul>
     <% } else { %>
-      <p>No messages available.</p>
+    <p>No messages available.</p>
     <% } %>
   </body>
 </html>

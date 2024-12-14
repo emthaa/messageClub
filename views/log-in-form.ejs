@@ -1,23 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Log In</title>
-</head>
-<body>
-  <h1>Log In</h1>
-  <form action="/log-in" method="post">
-    <% if (errors) { %>
-      <ul>
-        <% errors.forEach(error => { %>
-          <li><%= error.msg %></li>
-        <% }); %>
-      </ul>
-    <% } %>
-    <input type="text" name="username" placeholder="Username" value="<%= data ? data.username : '' %>">
-    <input type="password" name="password" placeholder="Password">
-    <button type="submit">Log In</button>
-  </form>
-  
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Log In</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+  </head>
+  <body>
+    <main>
+      <h1>Log In</h1>
+      <form action="/log-in" method="post">
+        <input
+          type="text"
+          name="username"
+          placeholder="Username"
+          value="<%= data ? data.username : '' %>"
+        />
+        <input type="password" name="password" placeholder="Password" />
+        <button type="submit">Log In</button>
+        <% if (errors) { %>
+        <ul>
+          <% errors.forEach(error => { %>
+          <li class="error"><%= error.msg %></li>
+          <% }); %>
+        </ul>
+        <% } %>
+      </form>
+    </main>
+  </body>
 </html>
